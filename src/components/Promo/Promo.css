@@ -1,6 +1,5 @@
 .promo {
   background-color: #DDDEE3;
-  min-width: 320px;
 }
 
 .promo__inner {
@@ -17,13 +16,11 @@
 .promo__title {
   margin: 0;
   max-width: 730px;
-  font-family: 'Inter', Arial, Helvetica, sans-serif;
   font-weight: normal;
   font-size: 50px;
   line-height: 58px;
   text-align: center;
   letter-spacing: -0.04em;
-  color: #000;
 }
 
 @media screen and (max-width: 425px) {

@@ -1,5 +1,6 @@
-import React from 'react'
-import './Promo.css'
+import React from 'react';
+import './Promo.css';
+import NavTab from '../NavTab/NavTab';
 
 const Promo = () => {
   return (
@@ -9,7 +10,7 @@ const Promo = () => {
           Учебный проект студента факультета Веб-разработки.
         </h1>
       </div>
-      {/* <NavTab /> */}
+      <NavTab />
     </section>
   )
 }
