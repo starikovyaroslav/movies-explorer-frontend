@@ -28,9 +28,7 @@
     font-size: 31px;
     line-height: 39px;
   }
-}
 
-@media screen and (max-width: 425px) {
   .promo__inner {
     background-size: 248px;
   }

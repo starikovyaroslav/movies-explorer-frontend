@@ -23,3 +23,13 @@
 .nav__link:hover {
   opacity: .6;
 }
+
+@media screen and (max-width: 425px) {
+  .nav__link {
+    font-size: 11px;
+  }
+
+  .nav__link:nth-child(2) {
+    margin: 0 24px;
+  }
+}
