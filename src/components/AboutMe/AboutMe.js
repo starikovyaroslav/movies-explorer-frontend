@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-target-blank */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import "./AboutMe.css"
@@ -13,8 +14,8 @@ const AboutMe = () => {
             <p className="me__description">Фронтенд-разработчик, 23 года</p>
             <p className="me__about">Я родился и живу в Новосибирске... </p>
             <ul className="me__links">
-              <li className="me__links-item"><a className="me__link" href="https://github.com/starikovyaroslav">Github</a></li>
-              <li className="me__links-item"><a className="me__link" href="#">Telegram</a></li>
+              <li className="me__links-item"><a className="me__link" href="https://github.com/starikovyaroslav" target="_blank">Github</a></li>
+              <li className="me__links-item"><a className="me__link" href="#" target="_blank">Telegram</a></li>
             </ul>
           </div>
           <div className="me__photo"></div>
