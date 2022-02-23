@@ -87,7 +87,7 @@
 
 @media screen and (max-width: 768px) {
   .search__container {
-    padding: 80px 30px 109px;
+    padding: 80px 30px 0;
   }
 
   .search__icon {
