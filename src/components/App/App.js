@@ -4,6 +4,7 @@ import { Header } from '../Header/Header';
 import { Footer } from '../Footer/Footer';
 import { Movies } from '../Movies/Movies';
 import { Route, Routes } from 'react-router-dom';
+import SavedMovies from '../SavedMovies/SavedMovies';
 
 function App() {
   return (
@@ -21,6 +22,12 @@ function App() {
           path='/movies'
           element={
             <Movies />
+          }
+        />
+        <Route
+          path='/saved-movies'
+          element={
+            <SavedMovies />
           }
         />
       </Routes>
