@@ -1,3 +1,5 @@
+import React from "react";
+
 import './App.css';
 import { Main } from '../Main/Main';
 import { Header } from '../Header/Header';
@@ -7,9 +9,14 @@ import { Route, Routes } from 'react-router-dom';
 import SavedMovies from '../SavedMovies/SavedMovies';
 
 function App() {
+
+  const [loggedIn, setLoggedIn] = React.useState(false);
+
   return (
     <div className="app">
-      <Header />
+      <Header
+        isLoggedIn={loggedIn}
+      />
 
       <Routes>
         <Route

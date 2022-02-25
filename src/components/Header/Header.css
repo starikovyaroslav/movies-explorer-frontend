@@ -2,7 +2,11 @@
   display: flex;
   justify-content: center;
   min-height: 74px;
-  background-color: #DDDEE3;
+  background-color: transparent;
+}
+
+.header-main {
+  background-color: #FAFAFA;
 }
 
 .header__inner {
@@ -17,6 +21,7 @@
 }
 
 .header__logo {
+  flex-shrink: 0;
   margin-right: auto;
   background-image: url(../../images/header-logo.svg);
   background-repeat: no-repeat;
