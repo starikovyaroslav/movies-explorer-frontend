@@ -1,0 +1,160 @@
+.register {
+  width: 100%;
+  background-color: #FAFAFA;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.register__container {
+  width: 396px;
+  display: flex;
+  flex-direction: column;
+  padding: 70px 0;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.register__logo {
+  background-image: url(../../images/header-logo.svg);
+  background-repeat: no-repeat;
+  width: 38px;
+  height: 38px;
+}
+
+.register__title {
+  margin: 40px 0;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px
+}
+
+.register__form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 24px;
+}
+
+.register__label {
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 12px;
+  color: #A0A0A0;
+  margin: 0;
+}
+
+.register__input {
+  padding: 0;
+  height: 32px;
+  width: 100%;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  background-color: transparent;
+  border: 0;
+  border-bottom: 1px solid #E8E8E8;
+}
+
+.register__input:focus {
+  outline: none;
+  border-bottom: 1px solid #3456F3;
+}
+
+.register__input-error {
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 12px;
+  color: #EE3465;
+}
+
+.register__button {
+  margin: 110px 0 0;
+  width: 100%;
+  height: 45px;
+  background-color: #3456F3;
+  border-radius: 3px;
+  border: none;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #FFFFFF;
+  transition: .3s linear;
+}
+
+.register__button:hover {
+  opacity: .6;
+}
+
+.register__box {
+  display: flex;
+  margin: 16px 0;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.register__text {
+  margin: 0;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #A0A0A0;
+}
+
+.register__link {
+  margin: 0;
+  text-decoration: none;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #3456F3;
+  transition: .3s linear;
+}
+
+.register__link:hover {
+  opacity: .6;
+}
+
+@media screen and (max-width: 768px) {
+  .register__container {
+    padding: 232px 0;
+  }
+}
+
+@media screen and (max-width: 476px) {
+  .register__container {
+    padding: 56px 0 30px;
+    width: 260px;
+    align-items: center;
+  }
+
+  .register__title {
+    margin: 50px 0 80px;
+  }
+
+  .register__button{
+    margin-top: 198px;
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .register__box{
+    margin: 14px 0 0;
+  }
+
+  .register__text{
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .register__link{
+    font-size: 12px;
+    line-height: 15px;
+  }
+}

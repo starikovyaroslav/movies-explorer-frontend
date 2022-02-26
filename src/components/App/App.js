@@ -7,38 +7,46 @@ import { Footer } from '../Footer/Footer';
 import { Movies } from '../Movies/Movies';
 import { Route, Routes } from 'react-router-dom';
 import SavedMovies from '../SavedMovies/SavedMovies';
+import Register from '../Register/Register';
 
 function App() {
 
-  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [loggedIn, setLoggedIn] = React.useState(true);
 
   return (
     <div className="app">
-      <Header
-        isLoggedIn={loggedIn}
-      />
-
       <Routes>
         <Route
           exact path='/'
           element={
-            <Main />
+            <Main
+              isLoggedIn={loggedIn}
+            />
           }
         />
         <Route
           path='/movies'
           element={
-            <Movies />
+            <Movies
+              isLoggedIn={loggedIn}
+            />
           }
         />
         <Route
           path='/saved-movies'
           element={
-            <SavedMovies />
+            <SavedMovies
+              isLoggedIn={loggedIn}
+            />
           }
         />
+        <Route
+        path='/signup'
+        element={
+          <Register />
+        }
+      />
       </Routes>
-      <Footer />
     </div>
   );
 }

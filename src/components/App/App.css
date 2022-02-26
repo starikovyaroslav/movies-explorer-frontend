@@ -1,6 +1,7 @@
 .app {
   min-width: 320px;
+  height: 100vw;
   font-family: 'Inter', Arial, Helvetica, sans-serif;
   color: #000;
-  background-color: #DDDEE3;
+  background-color: #FAFAFA;
 }
