@@ -10,15 +10,15 @@ function Portfolio() {
         <ul className="portfolio__list">
           <li className="portfolio__item">
             <p className="portfolio__item-name">Статичный сайт</p>
-            <a href="#" className="portfolio__link">↗</a>
+            <a href="https://github.com/starikovyaroslav/how-to-learn" className="portfolio__link" target="_blank" rel="noreferrer">↗</a>
           </li>
           <li className="portfolio__item">
             <p className="portfolio__item-name">Адаптивный сайт</p>
-            <a href="#" className="portfolio__link">↗</a>
+            <a href="https://github.com/starikovyaroslav/russian-travel" className="portfolio__link" target="_blank" rel="noreferrer">↗</a>
           </li>
           <li className="portfolio__item">
             <p className="portfolio__item-name">Одностраничное приложение</p>
-            <a href="#" className="portfolio__link">↗</a>
+            <a href="https://github.com/starikovyaroslav/react-mesto-api-full" className="portfolio__link" target="_blank" rel="noreferrer">↗</a>
           </li>
         </ul>
       </div>

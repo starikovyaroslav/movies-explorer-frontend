@@ -5,9 +5,9 @@ import './NavTab.css';
 const NavTab = () => {
   return (
     <nav className="nav">
-      <a href="#" className="nav__link">О проекте</a>
-      <a href="#" className="nav__link">Технологии</a>
-      <a href="#" className="nav__link">Студент</a>
+      <a href="#about" className="nav__link">О проекте</a>
+      <a href="#techs" className="nav__link">Технологии</a>
+      <a href="#me" className="nav__link">Студент</a>
     </nav>
   )
 }

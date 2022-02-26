@@ -10,8 +10,6 @@ import SavedMovies from '../SavedMovies/SavedMovies';
 import Register from '../Register/Register';
 import Login from "../Login/Login";
 import Profile from "../Profile/Profile";
-import NotFoundPage from "../NotFoundPage/NotFoundPage";
-
 
 function App() {
 
@@ -75,12 +73,6 @@ function App() {
               isLoggedIn={loggedIn}
               isLogout={handleLogout}
             />
-          }
-        />
-        <Route
-          path='/a'
-          element={
-            <NotFoundPage />
           }
         />
       </Routes>

@@ -11,13 +11,13 @@ export const Footer = () => {
           <p className="footer__copyright">&copy; 2022</p>
           <ul className="footer__links">
             <li className="footer__link-item">
-              <a href="#" className="footer__link" target="_blank">Яндекс.Практикум</a>
+              <a href="https://practicum.yandex.ru" className="footer__link" target="_blank" rel="noreferrer">Яндекс.Практикум</a>
             </li>
             <li className="footer__link-item">
-              <a href="#" className="footer__link" target="_blank">Github</a>
+              <a href="https://github.com/starikovyaroslav" className="footer__link" target="_blank" rel="noreferrer">Github</a>
             </li>
             <li className="footer__link-item">
-              <a href="#" className="footer__link" target="_blank">Facebook</a>
+              <a href="https://www.facebook.com/starikovyaroslav777" className="footer__link" target="_blank" rel="noreferrer">Facebook</a>
             </li>
           </ul>
         </div>
