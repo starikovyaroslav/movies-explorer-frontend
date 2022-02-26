@@ -10,15 +10,21 @@ import SavedMovies from '../SavedMovies/SavedMovies';
 import Register from '../Register/Register';
 import Login from "../Login/Login";
 import Profile from "../Profile/Profile";
+import NotFoundPage from "../NotFoundPage/NotFoundPage";
+
 
 function App() {
 
   const navigate = useNavigate();
-  const [loggedIn, setLoggedIn] = React.useState(true);
+  const [loggedIn, setLoggedIn] = React.useState(false);
 
   function handleAuthorization() {
     setLoggedIn(true);
     navigate('/movies');
+  }
+
+  function handleLogout() {
+    setLoggedIn(false);
   }
 
   return (
@@ -67,7 +73,14 @@ function App() {
           element={
             <Profile
               isLoggedIn={loggedIn}
+              isLogout={handleLogout}
             />
+          }
+        />
+        <Route
+          path='/a'
+          element={
+            <NotFoundPage />
           }
         />
       </Routes>

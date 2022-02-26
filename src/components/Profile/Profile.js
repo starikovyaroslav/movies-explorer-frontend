@@ -4,7 +4,7 @@ import { Header } from "../Header/Header";
 import "../Register/Register.css";
 import "./Profile.css";
 
-export default function Profile({ isLoggedIn, handleLogout }) {
+export default function Profile({ isLoggedIn, isLogout }) {
   const [email, setEmail] = React.useState("");
   const [name, setName] = React.useState("");
 
@@ -66,7 +66,7 @@ export default function Profile({ isLoggedIn, handleLogout }) {
               <button
                 className="profile__button profile__button-logout"
                 type="button"
-                onClick={handleLogout}
+                onClick={isLogout}
               >
                 Выйти из аккаунта
               </button>
