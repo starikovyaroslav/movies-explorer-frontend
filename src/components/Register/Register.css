@@ -146,6 +146,7 @@
 
   .register__box{
     margin: 14px 0 0;
+    gap: 7px;
   }
 
   .register__text{

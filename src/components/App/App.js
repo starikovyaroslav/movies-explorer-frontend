@@ -5,13 +5,21 @@ import { Main } from '../Main/Main';
 import { Header } from '../Header/Header';
 import { Footer } from '../Footer/Footer';
 import { Movies } from '../Movies/Movies';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate  } from 'react-router-dom';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import Register from '../Register/Register';
+import Login from "../Login/Login";
+import Profile from "../Profile/Profile";
 
 function App() {
 
+  const navigate = useNavigate();
   const [loggedIn, setLoggedIn] = React.useState(true);
+
+  function handleAuthorization() {
+    setLoggedIn(true);
+    navigate('/movies');
+  }
 
   return (
     <div className="app">
@@ -41,11 +49,27 @@ function App() {
           }
         />
         <Route
-        path='/signup'
-        element={
-          <Register />
-        }
-      />
+          path='/signup'
+          element={
+            <Register />
+          }
+        />
+        <Route
+          path='/signin'
+          element={
+            <Login
+              onLogin={handleAuthorization}
+            />
+          }
+        />
+        <Route
+          path='/profile'
+          element={
+            <Profile
+              isLoggedIn={loggedIn}
+            />
+          }
+        />
       </Routes>
     </div>
   );
