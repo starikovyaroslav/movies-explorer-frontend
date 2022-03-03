@@ -42,7 +42,9 @@ class MainApi {
 
 const auth = new MainApi({
   url: 'https://api.movies-explorer.strkv.nomoredomains.work',
-  headers: {'Content-Type': 'application/json'}
+  headers: {
+    'Content-Type': 'application/json'
+  }
 });
 
 export default auth
