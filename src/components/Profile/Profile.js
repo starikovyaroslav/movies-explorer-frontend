@@ -4,7 +4,7 @@ import { Header } from "../Header/Header";
 import "../Register/Register.css";
 import "./Profile.css";
 
-export default function Profile({ isLoggedIn, isLogout }) {
+export default function Profile({ loggedIn, isLogout }) {
   const [email, setEmail] = React.useState("");
   const [name, setName] = React.useState("");
 
@@ -22,7 +22,7 @@ export default function Profile({ isLoggedIn, isLogout }) {
 
   return (
     <>
-      <Header isLoggedIn={isLoggedIn} />
+      <Header loggedIn={loggedIn} />
       <section className="profile">
         <div className="profile__container">
           <h2 className="profile__title">Привет, Ярослав!</h2>

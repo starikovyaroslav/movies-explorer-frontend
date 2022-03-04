@@ -5,7 +5,7 @@ class Api {
   };
 
   getInitialCards() {
-      return fetch(`${this.url}/beatfilm-movies`, {
+      return fetch(this.url, {
           headers: this.headers
       })
           .then(this._checkResponse);

@@ -6,11 +6,11 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import { Header } from "../Header/Header";
 import Footer from "../Footer/Footer";
 
-const SavedMovies = ({isLoggedIn}) => {
+const SavedMovies = ({loggedIn}) => {
   return (
     <div className="movies">
       <Header
-        isLoggedIn={isLoggedIn}
+        loggedIn={loggedIn}
       />
       <SearchForm />
       <MoviesCardList />
