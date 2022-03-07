@@ -9,7 +9,7 @@ import api from "../../utils/MoviesApi";
 const MoviesCardList = () => {
 
   const location = useLocation();
-  const [size, setSize] = React.useState(0);
+  const [size, setSize] = React.useState(window.innerWidth);
   const [moviesList, setMoviesList] = React.useState([]);
   const [moviesTotal, setMoviesTotal] = React.useState(0);
   const [addMovies, setAddMovies] = React.useState(0);
@@ -22,10 +22,10 @@ const MoviesCardList = () => {
     if (size >= 1280) {
       setMoviesTotal(12);
       setAddMovies(3);
-    } else if (size < 1280 && size > 768) {
+    } else if (size < 1280 && size >= 768) {
       setMoviesTotal(8);
       setAddMovies(2);
-    } else if (size < 767) {
+    } else if (size < 768) {
       setMoviesTotal(5);
       setAddMovies(2);
     }
@@ -35,17 +35,17 @@ const MoviesCardList = () => {
     setMoviesTotal(moviesTotal + addMovies);
   }
 
-  React.useEffect(() => {
-    getCards();
-  }, [size]);
-
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     window.addEventListener("resize", resizeHandler);
 
     return () => {
       window.removeEventListener("resize", resizeHandler);
     };
   }, []);
+
+  React.useLayoutEffect(() => {
+    getCards();
+  }, [size]);
 
   React.useEffect(() => {
     api
