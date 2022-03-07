@@ -1,25 +1,25 @@
 import React from "react";
 
-import './App.css';
-import { Main } from '../Main/Main';
-import { Movies } from '../Movies/Movies';
-import { Route, Routes, useNavigate  } from 'react-router-dom';
-import SavedMovies from '../SavedMovies/SavedMovies';
-import Register from '../Register/Register';
+import "./App.css";
+import { Main } from "../Main/Main";
+import { Movies } from "../Movies/Movies";
+import { Route, Routes, useNavigate } from "react-router-dom";
+import SavedMovies from "../SavedMovies/SavedMovies";
+import Register from "../Register/Register";
 import Login from "../Login/Login";
 import Profile from "../Profile/Profile";
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import api from "../../utils/MainApi";
 
 function App() {
-
   const navigate = useNavigate();
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
 
   function handleAuthorization() {
     setLoggedIn(true);
-    navigate('/movies');
+    navigate("/movies");
   }
 
   function handleLogout() {
@@ -30,53 +30,40 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="app">
         <Routes>
+          <Route exact path="/" element={<Main loggedIn={loggedIn} />} />
           <Route
-            exact path='/'
-            element={
-              <Main
-              loggedIn={loggedIn}
-              />
-            }
-          />
-          <Route
-            path='/movies'
+            path="/movies"
             element={
               <ProtectedRoute
-                exact path='/movies'
+                exact
+                path="/movies"
                 loggedIn={loggedIn}
                 component={Movies}
               />
             }
           />
           <Route
-            path='/saved-movies'
+            path="/saved-movies"
             element={
               <ProtectedRoute
-                exact path='/saved-movies'
+                exact
+                path="/saved-movies"
                 loggedIn={loggedIn}
                 component={SavedMovies}
               />
             }
           />
+          <Route path="/signup" element={<Register />} />
           <Route
-            path='/signup'
-            element={
-              <Register />
-            }
+            path="/signin"
+            element={<Login onLogin={handleAuthorization} />}
           />
           <Route
-            path='/signin'
-            element={
-              <Login
-                onLogin={handleAuthorization}
-              />
-            }
-          />
-          <Route
-            path='/profile'
+            path="/profile"
             element={
               <ProtectedRoute
-                exact path='/profile'
+                exact
+                path="/profile"
                 loggedIn={loggedIn}
                 component={Profile}
                 isLogout={handleLogout}

@@ -6,7 +6,7 @@ import Preloader from "../Preloader/Preloader";
 import "./MoviesCardList.css";
 import api from "../../utils/MoviesApi";
 
-const MoviesCardList = () => {
+const MoviesCardList = ({savedClick}) => {
 
   const location = useLocation();
   const [size, setSize] = React.useState(window.innerWidth);
@@ -68,7 +68,11 @@ const MoviesCardList = () => {
           <ul className="movies-list">
           { moviesList.map((movie, id) => {
             if (id + 1 <= moviesTotal) {
-              return <MoviesCard movie={movie} key={id} />;
+              return <MoviesCard
+                movie={movie}
+                key={id}
+                savedClick={savedClick}
+              />;
             } else {
               return '';
             }

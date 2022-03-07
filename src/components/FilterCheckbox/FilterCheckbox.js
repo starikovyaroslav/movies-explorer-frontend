@@ -12,7 +12,7 @@ const FilterCheckbox = () => {
 
   return (
     <div className="checkbox">
-      <div className="checkbox__switch" onClick={onClickHandler}>
+      <div className={`checkbox__switch ${!isToggled ? 'disable' : ''}`} onClick={onClickHandler}>
         <input id="switch" type="checkbox" className='checkbox__input'/>
         <div className={state}/>
       </div>
