@@ -52,7 +52,7 @@ class MainApi {
       headers: this.headers,
       body: JSON.stringify({
         name: name,
-        about: email,
+        email: email,
       }),
     }).then(this._checkResponse);
   }

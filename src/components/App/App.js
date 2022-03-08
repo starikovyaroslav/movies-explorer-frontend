@@ -70,6 +70,16 @@ function App() {
       });
   };
 
+  const handleUpdateUser = (name, email) => {
+    auth.setUserInfo(name, email)
+      .then((data) => {
+        setCurrentUser(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="app">
@@ -115,6 +125,8 @@ function App() {
                 loggedIn={loggedIn}
                 component={Profile}
                 isLogout={handleLogout}
+                currentUser={currentUser}
+                onUpdateUser={handleUpdateUser}
               />
             }
           />

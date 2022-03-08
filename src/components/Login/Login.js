@@ -50,7 +50,7 @@ export default function Login({onLogin}) {
             />
             <span className="register__input-error">{validation.errors.password}</span>
           </label>
-          <button className="register__button" type="submit">
+          <button className={`register__button ${validation.isValid ? "" : "register__button_disable"}`} type="submit">
             Войти
           </button>
         </form>
