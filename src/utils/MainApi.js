@@ -4,7 +4,7 @@ class MainApi {
     this.headers = headers;
   }
 
-  register({ name, password, email }) {
+  register(name, email, password) {
     return fetch(`${this.url}/signup`, {
       credentials: "include",
       method: "POST",
@@ -17,7 +17,7 @@ class MainApi {
     }).then(this._checkResponse);
   }
 
-  authorize({ password, email }) {
+  authorize(email, password) {
     return fetch(`${this.url}/signin`, {
       credentials: "include",
       method: "POST",
@@ -45,7 +45,7 @@ class MainApi {
     }).then(this._checkResponse);
   }
 
-  setUserInfo({ name, email }) {
+  setUserInfo(name, email) {
     return fetch(`${this.url}/users/me`, {
       credentials: "include",
       method: "PATCH",

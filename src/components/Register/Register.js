@@ -1,26 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Register.css";
+import FormValidation from "../../utils/FormValidation";
 
-export default function Register() {
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [name, setName] = React.useState("");
+export default function Register({handleRegistration}) {
+  const validation = FormValidation();
+  const { name, email, password } = validation.values;
 
-  const handleChangeName = (evt) => {
-    setName(evt.target.value);
-  };
-
-  const handleChangeEmail = (evt) => {
-    setEmail(evt.target.value);
-  };
-
-  const handleChangePassword = (evt) => {
-    setPassword(evt.target.value);
-  };
-
-  function handleSubmit(evt) {
-    evt.preventDefault();
+  function handleSubmit(e) {
+    e.preventDefault();
+    handleRegistration(name, email, password);
+    validation.resetForm();
   }
 
   return (
@@ -35,14 +25,15 @@ export default function Register() {
               className="register__input"
               type="text"
               name="name"
-              value={"" || name}
-              onChange={handleChangeName}
+              value={validation.values.name || ''}
+              onChange={validation.handleChange}
               id="name"
               minLength="2"
               maxLength="30"
               required
+              autoComplete="off"
             />
-            <span className="register__input-error"></span>
+            <span className="register__input-error">{validation.errors.name}</span>
           </label>
           <label className="register__label">
             E-mail
@@ -50,14 +41,15 @@ export default function Register() {
               className="register__input"
               type="email"
               name="email"
-              value={"" || email}
-              onChange={handleChangeEmail}
+              value={validation.values.email || ""}
+              onChange={validation.handleChange}
               id="email"
               minLength="6"
               maxLength="20"
               required
+              autoComplete="off"
             />
-            <span className="register__input-error"></span>
+            <span className="register__input-error">{validation.errors.email}</span>
           </label>
           <label className="register__label">
             Пароль
@@ -65,16 +57,17 @@ export default function Register() {
               className="register__input"
               type="password"
               name="password"
-              value={password}
-              onChange={handleChangePassword}
+              value={validation.values.password || ''}
+              onChange={validation.handleChange}
               id="password"
               minLength="6"
               maxLength="20"
               required
+              autoComplete="off"
             />
-            <span className="register__input-error"></span>
+            <span className="register__input-error">{validation.errors.password}</span>
           </label>
-          <button className="register__button" type="submit">
+          <button className={`register__button ${validation.isValid ? "" : "register__button_disable"}`} type="submit">
             Зарегистрироваться
           </button>
         </form>
