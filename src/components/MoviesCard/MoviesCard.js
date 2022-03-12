@@ -3,28 +3,16 @@ import { useLocation } from 'react-router-dom';
 import './MoviesCard.css';
 import api from '../../utils/MainApi';
 
-const MoviesCard = ({ movie }) => {
+const MoviesCard = ({loggedIn, movie, savedMovies, setSavedMovies}) => {
 
+  const location = useLocation();
   const [isSaved, setIsSaved] = React.useState(false);
-  const [savedMovies, setSavedMovies] = React.useState([]);
 
   const getTime = () => {
     return `${Math.floor(movie.duration / 60)}ч ${movie.duration % 60}м`;
   };
 
-  const getSavedMovies = () => {
-    api
-      .getSavedMovies()
-      .then((data) => {
-        const saved = data.map((item) => ({ ...item, id: item.movieId }));
-        localStorage.setItem("savedMovies", JSON.stringify(saved));
-        setSavedMovies(saved);
-      })
-      .catch((err) => {
-        localStorage.removeItem("savedMovies");
-        console.log(err);
-      });
-  };
+
 
   const addMovies = (movie) => {
     api
@@ -33,25 +21,36 @@ const MoviesCard = ({ movie }) => {
         setSavedMovies([...savedMovies, { ...res, id: res.movieId }]);
       })
       .catch((err) => {
-        console.error(err);
+        console.log(err);
       });
   };
 
   const deleteMovies = (movie) => {
-    const movieId = savedMovies.find((item) => item.id === movie.id);
+    const movieId = savedMovies.find((item) => item === movie.id);
     api
       .deleteSavedMovies(movieId)
       .then((res) => {
         if (res) {
           setSavedMovies(
-            savedMovies.filter((item) => item.movieId !== res.movieId)
+            savedMovies.filter((item) => item !== res.movieId)
           );
         }
       })
       .catch((err) => {
-        console.error(err);
+        console.log(err);
       });
   };
+
+  const isMovieAdded = (movie) => savedMovies.some((item) => item === movie.id);
+
+/*   function handleCardLike(card) {
+    const isLiked = card.likes.some(i => i === currentUser._id);
+    api.changeLikeCardStatus(card._id, !isLiked)
+      .then((newCard) => {
+        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+      })
+      .catch((err) => console.log(err));
+  } */
 
   const onClickHandler = () => {
     if (!isSaved) {
@@ -59,7 +58,7 @@ const MoviesCard = ({ movie }) => {
       addMovies(movie);
     } else {
       setIsSaved(!isSaved);
-      deleteMovies(movie);
+      deleteMovies(movie._id);
     }
 
 
@@ -88,7 +87,7 @@ const MoviesCard = ({ movie }) => {
         >
           <img
             className="movie__image"
-            src={`https://api.nomoreparties.co/${movie.image.url}`}
+            src={location.pathname === '/movies' ? `https://api.nomoreparties.co/${movie.image.url}` : `${movie.image}`}
             alt={movie.nameRU}
           />
         </a>

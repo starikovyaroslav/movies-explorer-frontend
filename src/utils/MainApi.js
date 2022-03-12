@@ -63,7 +63,7 @@ class MainApi {
       method: "POST",
       headers: this.headers,
       body: JSON.stringify({
-        id: movie.id,
+        movieId: movie.id,
         country: movie.country,
         director: movie.director,
         duration: movie.duration,
@@ -83,7 +83,7 @@ class MainApi {
   }
 
   getSavedMovies() {
-    return fetch(`${this.baseAuthUrl}/movies`, {
+    return fetch(`${this.url}/movies`, {
       credentials: "include",
       method: "GET",
       headers: this.headers,
@@ -91,7 +91,7 @@ class MainApi {
   }
 
   deleteSavedMovies(_id) {
-    return fetch(`${this.baseAuthUrl}/movies/${_id}`, {
+    return fetch(`${this.url}/movies/${_id}`, {
       credentials: "include",
       method: "DELETE",
       headers: this.headers,

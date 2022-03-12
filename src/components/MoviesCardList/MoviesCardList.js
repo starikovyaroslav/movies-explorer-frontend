@@ -6,7 +6,7 @@ import Preloader from "../Preloader/Preloader";
 import "./MoviesCardList.css";
 import api from "../../utils/MoviesApi";
 
-const MoviesCardList = ({savedClick}) => {
+const MoviesCardList = ({loggedIn, savedMovies, setSavedMovies}) => {
 
   const location = useLocation();
   const [size, setSize] = React.useState(window.innerWidth);
@@ -69,9 +69,11 @@ const MoviesCardList = ({savedClick}) => {
           { moviesList.map((movie, id) => {
             if (id + 1 <= moviesTotal) {
               return <MoviesCard
+                loggedIn={loggedIn}
                 movie={movie}
-                key={id}
-                savedClick={savedClick}
+                key={movie.id}
+                savedMovies={savedMovies}
+                setSavedMovies={setSavedMovies}
               />;
             } else {
               return '';
