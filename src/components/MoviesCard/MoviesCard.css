@@ -42,6 +42,7 @@
 }
 
 .movie__button-saved {
+  cursor: pointer;
   background-image: url(../../images/saved.svg);
   background-repeat: no-repeat;
   background-position: center;
@@ -50,6 +51,26 @@
   height: 21px;
   border-radius: 30px;
   transition: .3s linear;
+}
+
+.movie__button-saved:hover {
+  opacity: .8;
+}
+
+.movie__button-del {
+  cursor: pointer;
+  background-image: url(../../images/close-icon.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #F4F4F4;
+  width: 21px;
+  height: 21px;
+  border-radius: 30px;
+  transition: .3s linear;
+}
+
+.movie__button-del:hover {
+  opacity: .8;
 }
 
 .movie__image {

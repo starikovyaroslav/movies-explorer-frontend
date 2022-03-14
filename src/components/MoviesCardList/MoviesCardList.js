@@ -4,13 +4,11 @@ import { useLocation } from 'react-router';
 import MoviesCard from "../MoviesCard/MoviesCard";
 import Preloader from "../Preloader/Preloader";
 import "./MoviesCardList.css";
-import api from "../../utils/MoviesApi";
 
-const MoviesCardList = ({loggedIn, savedMovies, setSavedMovies}) => {
+const MoviesCardList = ({loggedIn, moviesList, addMovie, deleteMovies}) => {
 
   const location = useLocation();
   const [size, setSize] = React.useState(window.innerWidth);
-  const [moviesList, setMoviesList] = React.useState([]);
   const [moviesTotal, setMoviesTotal] = React.useState(0);
   const [addMovies, setAddMovies] = React.useState(0);
 
@@ -43,21 +41,10 @@ const MoviesCardList = ({loggedIn, savedMovies, setSavedMovies}) => {
     };
   }, []);
 
+
   React.useLayoutEffect(() => {
     getCards();
   }, [size]);
-
-  React.useEffect(() => {
-    api
-      .getInitialCards()
-      .then((cards) => {
-        setMoviesList(cards);
-      })
-      .catch((err) => {
-        console.log(`Внимание! ${err}`);
-      });
-  }, []);
-
 
   return (
     <>
@@ -68,13 +55,15 @@ const MoviesCardList = ({loggedIn, savedMovies, setSavedMovies}) => {
           <ul className="movies-list">
           { moviesList.map((movie, id) => {
             if (id + 1 <= moviesTotal) {
-              return <MoviesCard
-                loggedIn={loggedIn}
-                movie={movie}
-                key={movie.id}
-                savedMovies={savedMovies}
-                setSavedMovies={setSavedMovies}
-              />;
+              return(
+                <MoviesCard
+                  movie={movie}
+                  key={id}
+                  moviesList={moviesList}
+                  addMovie={addMovie}
+                  deleteMovies={deleteMovies}
+                />
+              );
             } else {
               return '';
             }
@@ -82,7 +71,7 @@ const MoviesCardList = ({loggedIn, savedMovies, setSavedMovies}) => {
           </ul>
         )}
       </section>
-      { moviesTotal < moviesList.length && location.pathname === '/movies' && (
+      { moviesTotal < moviesList.length /* && location.pathname === '/movies' */ && (
         <div className="movies-list__more">
           <button className="movies-list__button" onClick={addCards}>Еще</button>
         </div>

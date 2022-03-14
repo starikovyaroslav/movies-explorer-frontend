@@ -2,8 +2,8 @@ import React from "react";
 
 import "./App.css";
 import { Main } from "../Main/Main";
-import { Movies } from "../Movies/Movies";
-import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
+import Movies from "../Movies/Movies";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import SavedMovies from "../SavedMovies/SavedMovies";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
@@ -11,13 +11,14 @@ import Profile from "../Profile/Profile";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import auth from "../../utils/MainApi";
+import api from "../../utils/MoviesApi";
 
 function App() {
   const navigate = useNavigate();
-  const location = useLocation();
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
-  const [savedMovies, setSavedMovies] = React.useState([]);
+  const [savedList, setSavedList] = React.useState([]);
+
 
   function handleLogout() {
     localStorage.clear()
@@ -40,6 +41,18 @@ function App() {
           navigate("/");
       })
     }
+  }, []);
+
+  React.useEffect(() => {
+    auth
+      .getSavedMovies()
+      .then((cards) => {
+        localStorage.setItem("savedMovies", JSON.stringify(cards));
+        setSavedList(cards);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
     const getCurrentUser = () => {
@@ -94,27 +107,38 @@ function App() {
       });
   };
 
-  const getSavedMovies = () => {
+  const addMovie = (movie) => {
     auth
-      .getSavedMovies()
-      .then((data) => {
-        const saved = data.map((item) => item._id);
-        localStorage.setItem("savedMovies", JSON.stringify(saved));
-        setSavedMovies(saved);
-        console.log(saved);
+      .addSavedMovies(movie)
+      .then((res) => {
+        setSavedList([...savedList, res]);
       })
       .catch((err) => {
-        localStorage.removeItem("savedMovies");
         console.log(err);
       });
   };
 
-  React.useEffect(() => {
-    if (loggedIn) {
-      console.log(loggedIn);
-      getSavedMovies();
-    }
-  }, [loggedIn]);
+  const deleteMovies = (movie) => {
+
+    const id = savedList.find((item) => item.id === movie.id)._id;
+    console.log(id);
+    auth
+      .deleteSavedMovies(id)
+      .then((res) => {
+        if (res) {
+          const newList = savedList.filter((item) => item.id !== res.id)
+          setSavedList(newList);
+        }
+        console.log("Фильм удален");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const isMovieAdded = (movie) => {
+    savedList.some((item) => item.id === movie.id);
+  }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -125,11 +149,11 @@ function App() {
             path="/movies"
             element={
               <ProtectedRoute
-                path="/movies"
                 loggedIn={loggedIn}
                 component={Movies}
-                savedMovies={savedMovies}
-                setSavedMovies={setSavedMovies}
+                addMovie={addMovie}
+                isMovieAdded={isMovieAdded}
+                deleteMovies={deleteMovies}
               />
             }
           />
@@ -140,6 +164,9 @@ function App() {
                 path="/saved-movies"
                 loggedIn={loggedIn}
                 component={SavedMovies}
+                savedList={savedList}
+                deleteMovies={deleteMovies}
+                isMovieAdded={isMovieAdded}
               />
             }
           />

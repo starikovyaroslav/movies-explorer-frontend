@@ -1,49 +1,18 @@
-import React from 'react';
-import { useLocation } from 'react-router-dom';
-import './MoviesCard.css';
-import api from '../../utils/MainApi';
+import React from "react";
+import { useLocation } from "react-router-dom";
+import "./MoviesCard.css";
 
-const MoviesCard = ({loggedIn, movie, savedMovies, setSavedMovies}) => {
-
+const MoviesCard = ({ loggedIn, movie , savedList, addMovie, deleteMovies, isMovieAdded}) => {
   const location = useLocation();
   const [isSaved, setIsSaved] = React.useState(false);
+/*   const isAdded = isMovieAdded(movie); */
 
   const getTime = () => {
     return `${Math.floor(movie.duration / 60)}ч ${movie.duration % 60}м`;
   };
 
 
-
-  const addMovies = (movie) => {
-    api
-      .addSavedMovies(movie)
-      .then((res) => {
-        setSavedMovies([...savedMovies, { ...res, id: res.movieId }]);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const deleteMovies = (movie) => {
-    const movieId = savedMovies.find((item) => item === movie.id);
-    api
-      .deleteSavedMovies(movieId)
-      .then((res) => {
-        if (res) {
-          setSavedMovies(
-            savedMovies.filter((item) => item !== res.movieId)
-          );
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const isMovieAdded = (movie) => savedMovies.some((item) => item === movie.id);
-
-/*   function handleCardLike(card) {
+  /*   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i === currentUser._id);
     api.changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
@@ -53,32 +22,49 @@ const MoviesCard = ({loggedIn, movie, savedMovies, setSavedMovies}) => {
   } */
 
   const onClickHandler = () => {
+    console.log(movie)
     if (!isSaved) {
       setIsSaved(!isSaved);
-      addMovies(movie);
+      addMovie(movie);
     } else {
       setIsSaved(!isSaved);
-      deleteMovies(movie._id);
+      deleteMovies(movie);
     }
-
-
   };
 
-/*   const handleBookmarkClick = (e) => {
+  /*   const handleBookmarkClick = (e) => {
     e.preventDefault();
     savedClick(movie, isSaved);
   }; */
 
-/*   const removeHandler = () => {
-    savedClick(movie, false);
+    const removeHandler = () => {
+      deleteMovies(movie);
   };
- */
+
+
   return (
     <li className="movie">
       <div className="movie__container">
-        <button className={`movie__button ${ isSaved ? 'movie__button-saved' : 'movie__button-save'}`} type="button" onClick={onClickHandler}>
-        {`${isSaved ? '' : 'Сохранить'}`}
+        { location.pathname === "/movies" ?
+         (
+          <button
+            className={`movie__button ${
+              isSaved ? "movie__button-saved" : "movie__button-save"
+            }`}
+            type="button"
+            onClick={onClickHandler}
+          >
+            {`${isSaved ? "" : "Сохранить"}`}
+          </button>
+        )
+        : (
+        <button
+            className="movie__button movie__button-del"
+            type="button"
+            onClick={removeHandler}
+          >
         </button>
+        )}
         <a
           className="movie__image"
           href={movie.trailerLink}
@@ -87,7 +73,11 @@ const MoviesCard = ({loggedIn, movie, savedMovies, setSavedMovies}) => {
         >
           <img
             className="movie__image"
-            src={location.pathname === '/movies' ? `https://api.nomoreparties.co/${movie.image.url}` : `${movie.image}`}
+            src={
+              location.pathname === "/movies"
+                ? `https://api.nomoreparties.co/${movie.image.url}`
+                : `${movie.image}`
+            }
             alt={movie.nameRU}
           />
         </a>

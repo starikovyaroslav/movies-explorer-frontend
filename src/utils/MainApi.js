@@ -63,7 +63,7 @@ class MainApi {
       method: "POST",
       headers: this.headers,
       body: JSON.stringify({
-        movieId: movie.id,
+        id: movie.id,
         country: movie.country,
         director: movie.director,
         duration: movie.duration,
