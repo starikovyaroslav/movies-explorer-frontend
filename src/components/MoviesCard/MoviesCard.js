@@ -6,21 +6,10 @@ const MoviesCard = ({ loggedIn, movie , savedList, addMovie, deleteMovies, isMov
   const location = useLocation();
   const [isSaved, setIsSaved] = React.useState(false);
   const isAdded = isMovieAdded(movie);
-  console.log(isAdded)
 
   const getTime = () => {
     return `${Math.floor(movie.duration / 60)}ч ${movie.duration % 60}м`;
   };
-
-
-  /*   function handleCardLike(card) {
-    const isLiked = card.likes.some(i => i === currentUser._id);
-    api.changeLikeCardStatus(card._id, !isLiked)
-      .then((newCard) => {
-        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
-      })
-      .catch((err) => console.log(err));
-  } */
 
   const onClickHandler = () => {
     if (!isAdded) {
@@ -31,12 +20,6 @@ const MoviesCard = ({ loggedIn, movie , savedList, addMovie, deleteMovies, isMov
       deleteMovies(movie);
     }
   };
-
-  /*   const handleBookmarkClick = (e) => {
-    e.preventDefault();
-    savedClick(movie, isSaved);
-  }; */
-
     const removeHandler = () => {
       deleteMovies(movie);
   };

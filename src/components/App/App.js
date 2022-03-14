@@ -11,7 +11,7 @@ import Profile from "../Profile/Profile";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import auth from "../../utils/MainApi";
-import api from "../../utils/MoviesApi";
+import NotFoundPage from "../NotFoundPage/NotFoundPage"
 
 function App() {
   const navigate = useNavigate();
@@ -145,6 +145,7 @@ function App() {
             path="/movies"
             element={
               <ProtectedRoute
+                path="/movies"
                 loggedIn={loggedIn}
                 component={Movies}
                 addMovie={addMovie}
@@ -185,6 +186,12 @@ function App() {
                 currentUser={currentUser}
                 onUpdateUser={handleUpdateUser}
               />
+            }
+          />
+          <Route
+            path='*'
+            element={
+              <NotFoundPage />
             }
           />
         </Routes>
