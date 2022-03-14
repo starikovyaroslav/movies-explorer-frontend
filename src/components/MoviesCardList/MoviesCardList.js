@@ -1,13 +1,11 @@
 import React from "react";
 
-import { useLocation } from 'react-router';
 import MoviesCard from "../MoviesCard/MoviesCard";
 import Preloader from "../Preloader/Preloader";
 import "./MoviesCardList.css";
 
-const MoviesCardList = ({loggedIn, moviesList, addMovie, deleteMovies}) => {
+const MoviesCardList = ({loggedIn, moviesList, addMovie, deleteMovies, isMovieAdded}) => {
 
-  const location = useLocation();
   const [size, setSize] = React.useState(window.innerWidth);
   const [moviesTotal, setMoviesTotal] = React.useState(0);
   const [addMovies, setAddMovies] = React.useState(0);
@@ -62,6 +60,7 @@ const MoviesCardList = ({loggedIn, moviesList, addMovie, deleteMovies}) => {
                   moviesList={moviesList}
                   addMovie={addMovie}
                   deleteMovies={deleteMovies}
+                  isMovieAdded={isMovieAdded}
                 />
               );
             } else {

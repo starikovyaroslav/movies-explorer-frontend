@@ -5,7 +5,8 @@ import "./MoviesCard.css";
 const MoviesCard = ({ loggedIn, movie , savedList, addMovie, deleteMovies, isMovieAdded}) => {
   const location = useLocation();
   const [isSaved, setIsSaved] = React.useState(false);
-/*   const isAdded = isMovieAdded(movie); */
+  const isAdded = isMovieAdded(movie);
+  console.log(isAdded)
 
   const getTime = () => {
     return `${Math.floor(movie.duration / 60)}ч ${movie.duration % 60}м`;
@@ -22,8 +23,7 @@ const MoviesCard = ({ loggedIn, movie , savedList, addMovie, deleteMovies, isMov
   } */
 
   const onClickHandler = () => {
-    console.log(movie)
-    if (!isSaved) {
+    if (!isAdded) {
       setIsSaved(!isSaved);
       addMovie(movie);
     } else {
@@ -49,12 +49,12 @@ const MoviesCard = ({ loggedIn, movie , savedList, addMovie, deleteMovies, isMov
          (
           <button
             className={`movie__button ${
-              isSaved ? "movie__button-saved" : "movie__button-save"
+              isAdded ? "movie__button-saved" : "movie__button-save"
             }`}
             type="button"
             onClick={onClickHandler}
           >
-            {`${isSaved ? "" : "Сохранить"}`}
+            {`${isAdded ? "" : "Сохранить"}`}
           </button>
         )
         : (

@@ -111,7 +111,7 @@ function App() {
     auth
       .addSavedMovies(movie)
       .then((res) => {
-        setSavedList([...savedList, res]);
+        setSavedList([...savedList, { ...res, id: res.id }]);
       })
       .catch((err) => {
         console.log(err);
@@ -119,9 +119,7 @@ function App() {
   };
 
   const deleteMovies = (movie) => {
-
     const id = savedList.find((item) => item.id === movie.id)._id;
-    console.log(id);
     auth
       .deleteSavedMovies(id)
       .then((res) => {
@@ -136,9 +134,7 @@ function App() {
       });
   };
 
-  const isMovieAdded = (movie) => {
-    savedList.some((item) => item.id === movie.id);
-  }
+  const isMovieAdded = (movie) => savedList.some((item) => item.id === movie.id);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
