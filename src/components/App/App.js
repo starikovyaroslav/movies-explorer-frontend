@@ -34,6 +34,10 @@ function App() {
     sessionStorage.clear()
     setLoggedIn(false);
     setCurrentUser({});
+    setFilterSaved([]);
+    setFilterMovies([]);
+    setSavedList([]);
+    setMoviesList([]);
     navigate("/");
   }
 
@@ -175,15 +179,13 @@ function App() {
   };
 
   const searchHandler = (search) => {
-
     setTimeout(() => {
       setQuery(search);
       setFilterMovies(searchFilter(moviesList, search));
     }, 1000);
   };
 
-  const searcSavedhHandler = (search) => {
-
+  const searchSavedhHandler = (search) => {
     setTimeout(() => {
       setQuery(search);
       setFilterSaved(searchFilter(savedList, search));
@@ -223,7 +225,7 @@ function App() {
                 savedList={savedList}
                 deleteMovies={deleteMovies}
                 isMovieAdded={isMovieAdded}
-                onSubmit={searcSavedhHandler}
+                onSubmit={searchSavedhHandler}
                 movies={filterSaved}
               />
             }

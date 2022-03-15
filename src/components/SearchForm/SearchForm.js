@@ -3,7 +3,7 @@ import './SearchForm.css';
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import FormValidation from "../../utils/FormValidation";
 
-export const SearchForm = ({onSubmit}) => {
+export const SearchForm = ({onSubmit, onClickHandler, state, shortfilm}) => {
 
   const validation = FormValidation();
   const [error, setError] = React.useState('');
@@ -46,12 +46,12 @@ export const SearchForm = ({onSubmit}) => {
             <button className="search__submit-button" type="submit"></button>
             <span className="search__line"/>
             <div className="search__visibility_large">
-              <FilterCheckbox />
+              <FilterCheckbox onClickHandler={onClickHandler} state={state} shortfilm={shortfilm} />
             </div>
 
           </div>
           <div className="search__visibility_small">
-            <FilterCheckbox />
+            <FilterCheckbox onClickHandler={onClickHandler} state={state} shortfilm={shortfilm} />
           </div>
         </form>
       </div>
