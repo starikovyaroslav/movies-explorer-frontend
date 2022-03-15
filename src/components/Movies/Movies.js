@@ -6,17 +6,13 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import { Header } from "../Header/Header";
 import Footer from "../Footer/Footer";
 
-const Movies = ({ loggedIn, moviesList, movies, isSuccess, addMovie, deleteMovies, isMovieAdded, onSubmit }) => {
+const Movies = ({ loggedIn, moviesList, searchError, addMovie, deleteMovies, isMovieAdded, onSubmit }) => {
 
   const [shortfilm, setShortfilm] = React.useState(false);
   const state = shortfilm ? "checkbox__state_enable" : "checkbox__state_disable";
   const shortFilmFilter = (movies) => {
     const filter = movies.filter((item) => item.duration < 40);
-    if (filter === 0) {
-      isSuccess = false;
-    } else {
-      return filter;
-    }
+    return filter;
   }
 
   const onClickHandler = () => {
@@ -30,24 +26,18 @@ const Movies = ({ loggedIn, moviesList, movies, isSuccess, addMovie, deleteMovie
         onSubmit={onSubmit} onClickHandler={onClickHandler} state={state} shortfilm={shortfilm}
       />
 
-      { isSuccess ?
+      { searchError==='' ?
        (
         <MoviesCardList
           loggedIn={loggedIn}
-          moviesList={shortfilm ? shortFilmFilter(movies) : movies}
+          moviesList={shortfilm ? shortFilmFilter(moviesList) : moviesList}
           addMovie={addMovie}
           deleteMovies={deleteMovies}
           isMovieAdded={isMovieAdded}
         />
         ) :
         (
-          <MoviesCardList
-            loggedIn={loggedIn}
-            moviesList={shortfilm ? shortFilmFilter(moviesList) : moviesList}
-            addMovie={addMovie}
-            deleteMovies={deleteMovies}
-            isMovieAdded={isMovieAdded}
-          />
+          <div className="movies__error">{searchError}</div>
         )
       }
       <Footer />

@@ -205,12 +205,12 @@ function App() {
                 loggedIn={loggedIn}
                 isSuccess={isSuccess}
                 component={Movies}
-                moviesList={moviesList}
+                moviesList={isSuccess ? filterMovies : moviesList}
                 addMovie={addMovie}
                 isMovieAdded={isMovieAdded}
                 deleteMovies={deleteMovies}
                 onSubmit={searchHandler}
-                movies={filterMovies}
+                searchError={searchError}
               />
             }
           />
@@ -222,11 +222,11 @@ function App() {
                 loggedIn={loggedIn}
                 component={SavedMovies}
                 isSuccess={isSuccess}
-                savedList={savedList}
+                savedList={isSuccess ? filterSaved : savedList}
                 deleteMovies={deleteMovies}
                 isMovieAdded={isMovieAdded}
                 onSubmit={searchSavedhHandler}
-                movies={filterSaved}
+                searchError={searchError}
               />
             }
           />

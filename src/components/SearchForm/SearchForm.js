@@ -12,7 +12,7 @@ export const SearchForm = ({onSubmit, onClickHandler, state, shortfilm}) => {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     if (!searchInput) {
-      setError('Нужно ввести ключевое слово');
+      setError('Нужно ввести слово');
       setTimeout(() => {
         setError('');
       }, 2000);
@@ -36,12 +36,11 @@ export const SearchForm = ({onSubmit, onClickHandler, state, shortfilm}) => {
               id="searchInput"
               className="search__input"
               name="searchInput"
-              placeholder="Фильм"
+              placeholder={error ? error : "Фильм"}
               value={validation.values.searchInput || ""}
               onChange={validation.handleChange}
               autoComplete="off"
               required
-
             />
             <button className="search__submit-button" type="submit"></button>
             <span className="search__line"/>
