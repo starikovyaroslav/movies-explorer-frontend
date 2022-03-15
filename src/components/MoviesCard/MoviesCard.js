@@ -2,7 +2,7 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import "./MoviesCard.css";
 
-const MoviesCard = ({ loggedIn, movie , savedList, addMovie, deleteMovies, isMovieAdded}) => {
+const MoviesCard = ({ movie, addMovie, deleteMovies, isMovieAdded}) => {
   const location = useLocation();
   const [isSaved, setIsSaved] = React.useState(false);
   const isAdded = isMovieAdded(movie);

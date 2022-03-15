@@ -3,7 +3,7 @@ import React from "react";
 import "./App.css";
 import { Main } from "../Main/Main";
 import Movies from "../Movies/Movies";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
 import SavedMovies from "../SavedMovies/SavedMovies";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
@@ -11,13 +11,22 @@ import Profile from "../Profile/Profile";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import auth from "../../utils/MainApi";
-import NotFoundPage from "../NotFoundPage/NotFoundPage"
+import NotFoundPage from "../NotFoundPage/NotFoundPage";
+import api from "../../utils/MoviesApi";
 
 function App() {
+
+  const location = useLocation();
   const navigate = useNavigate();
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
+  const [moviesList, setMoviesList] = React.useState([]);
   const [savedList, setSavedList] = React.useState([]);
+  const [query, setQuery] = React.useState('');
+  const [searchError, setSearchError] = React.useState('');
+  const [filterMovies, setFilterMovies] = React.useState([]);
+  const [filterSaved, setFilterSaved] = React.useState([]);
+  const [isSuccess, setIsSuccess] = React.useState(false);
 
 
   function handleLogout() {
@@ -29,12 +38,14 @@ function App() {
   }
 
   React.useEffect(() => {
+    const path = location.pathname;
     if (localStorage.loggedIn) {
       auth.getUserInfo()
         .then((user) => {
           setCurrentUser(user)
           localStorage.setItem("user", JSON.stringify(user));
           setLoggedIn(true);
+          navigate(path)
         })
         .catch((err) => {
           console.error(err);
@@ -52,6 +63,17 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
+      });
+  }, []);
+
+  React.useEffect(() => {
+    api
+      .getInitialCards()
+      .then((cards) => {
+        setMoviesList(cards);
+      })
+      .catch((err) => {
+        console.log(`Внимание! ${err}`);
       });
   }, []);
 
@@ -136,6 +158,38 @@ function App() {
 
   const isMovieAdded = (movie) => savedList.some((item) => item.id === movie.id);
 
+  const searchFilter = (data, query) => {
+    if (query) {
+      const regex = new RegExp(query, 'gi');
+      const filter = data.filter((item) => regex.test(item.nameRU) || regex.test(item.nameEN));
+      if (filter.length === 0) {
+        setIsSuccess(false);
+        setSearchError('Ничего не найдено');
+      } else {
+        setIsSuccess(true);
+        setSearchError('');
+      }
+      return filter;
+    }
+    return [];
+  };
+
+  const searchHandler = (search) => {
+
+    setTimeout(() => {
+      setQuery(search);
+      setFilterMovies(searchFilter(moviesList, search));
+    }, 1000);
+  };
+
+  const searcSavedhHandler = (search) => {
+
+    setTimeout(() => {
+      setQuery(search);
+      setFilterSaved(searchFilter(savedList, search));
+    }, 1000);
+  };
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="app">
@@ -147,10 +201,14 @@ function App() {
               <ProtectedRoute
                 path="/movies"
                 loggedIn={loggedIn}
+                isSuccess={isSuccess}
                 component={Movies}
+                moviesList={moviesList}
                 addMovie={addMovie}
                 isMovieAdded={isMovieAdded}
                 deleteMovies={deleteMovies}
+                onSubmit={searchHandler}
+                movies={filterMovies}
               />
             }
           />
@@ -161,9 +219,12 @@ function App() {
                 path="/saved-movies"
                 loggedIn={loggedIn}
                 component={SavedMovies}
+                isSuccess={isSuccess}
                 savedList={savedList}
                 deleteMovies={deleteMovies}
                 isMovieAdded={isMovieAdded}
+                onSubmit={searcSavedhHandler}
+                movies={filterSaved}
               />
             }
           />

@@ -7,18 +7,29 @@ import Footer from "../Footer/Footer";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 
 
-const SavedMovies = ({ loggedIn, savedList, deleteMovies, isMovieAdded }) => {
+const SavedMovies = ({ loggedIn, savedList, isSuccess, deleteMovies, isMovieAdded, onSubmit, movies }) => {
 
   return (
     <div className="movies">
       <Header loggedIn={loggedIn} />
-      <SearchForm />
+      <SearchForm onSubmit={onSubmit} />
 
-      <MoviesCardList
-        moviesList={savedList}
-        deleteMovies={deleteMovies}
-        isMovieAdded={isMovieAdded}
-      />
+      { isSuccess ?
+       (
+        <MoviesCardList
+          moviesList={movies}
+          deleteMovies={deleteMovies}
+          isMovieAdded={isMovieAdded}
+        />
+        ) :
+        (
+          <MoviesCardList
+            moviesList={savedList}
+            deleteMovies={deleteMovies}
+            isMovieAdded={isMovieAdded}
+          />
+        )
+      }
 
       <Footer />
     </div>
