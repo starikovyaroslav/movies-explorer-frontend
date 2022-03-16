@@ -83,26 +83,9 @@ function App() {
   };
 
   React.useEffect(() => {
-    console.log(savedList)
-    const movies = JSON.parse(localStorage.getItem('movies'));
-    if (movies) {
-      setMoviesList(movies);
-    } else {
-      getInitialCards();
-    }
-
-    const saved = JSON.parse(localStorage.getItem('savedMovies'));
-    if (saved) {
-      setSavedList(saved);
-    } else {
-      getSavedMovies();
-    }
-  }, []);
-
-/*   React.useEffect(() => {
     getInitialCards();
     getSavedMovies();
-  }, []); */
+  }, []);
 
   const getCurrentUser = () => {
     auth
@@ -206,15 +189,19 @@ function App() {
 
   const searchHandler = (search) => {
     setTimeout(() => {
+      localStorage.setItem("query", JSON.stringify(search));
       setQuery(search);
       setFilterMovies(searchFilter(moviesList, search));
+      localStorage.setItem("filter", JSON.stringify(filterMovies));
     }, 1000);
   };
 
   const searchSavedhHandler = (search) => {
     setTimeout(() => {
+      localStorage.setItem("query", JSON.stringify(search));
       setQuery(search);
       setFilterSaved(searchFilter(savedList, search));
+      localStorage.setItem("filter", JSON.stringify(filterSaved));
     }, 1000);
   };
 

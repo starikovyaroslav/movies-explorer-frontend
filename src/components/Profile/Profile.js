@@ -12,7 +12,9 @@ export default function Profile({ loggedIn, isLogout, currentUser, onUpdateUser 
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onUpdateUser(name, email);
+    if (email === currentUser.email) {
+      validation.errors.email = "Пользователь с таким email уже существует"
+    } else onUpdateUser(name, email);
   };
 
   return (
@@ -28,8 +30,9 @@ export default function Profile({ loggedIn, isLogout, currentUser, onUpdateUser 
                 className="profile__input"
                 type="text"
                 name="name"
-                value={validation.values.name || ""}
+                value={"" || validation.values.name}
                 onChange={validation.handleChange}
+                placeholder={currentUser.name}
                 id="name"
                 minLength="2"
                 maxLength="30"
@@ -49,7 +52,8 @@ export default function Profile({ loggedIn, isLogout, currentUser, onUpdateUser 
                 minLength="6"
                 maxLength="20"
                 required
-                value={validation.values.email || ""}
+                placeholder={currentUser.email}
+                value={"" || validation.values.email}
                 onChange={validation.handleChange}
               />
               <span className="register__input-error">{validation.errors.email}</span>
