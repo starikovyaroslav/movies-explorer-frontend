@@ -15,50 +15,62 @@ import NotFoundPage from "../NotFoundPage/NotFoundPage";
 import api from "../../utils/MoviesApi";
 
 function App() {
-
   const location = useLocation();
   const navigate = useNavigate();
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
   const [moviesList, setMoviesList] = React.useState([]);
   const [savedList, setSavedList] = React.useState([]);
-  const [query, setQuery] = React.useState('');
-  const [searchError, setSearchError] = React.useState('');
+  const [query, setQuery] = React.useState("");
+  const [searchError, setSearchError] = React.useState("");
   const [filterMovies, setFilterMovies] = React.useState([]);
   const [filterSaved, setFilterSaved] = React.useState([]);
   const [isSuccess, setIsSuccess] = React.useState(false);
 
-
   function handleLogout() {
-    localStorage.clear()
-    sessionStorage.clear()
+    localStorage.clear();
+    sessionStorage.clear();
     setLoggedIn(false);
     setCurrentUser({});
     setFilterSaved([]);
     setFilterMovies([]);
     setSavedList([]);
     setMoviesList([]);
+    auth.logout();
     navigate("/");
   }
 
   React.useEffect(() => {
     const path = location.pathname;
     if (localStorage.loggedIn) {
-      auth.getUserInfo()
+      auth
+        .getUserInfo()
         .then((user) => {
-          setCurrentUser(user)
+          setCurrentUser(user);
           localStorage.setItem("user", JSON.stringify(user));
           setLoggedIn(true);
-          navigate(path)
+          navigate(path);
         })
         .catch((err) => {
           console.error(err);
           navigate("/");
-      })
+        });
     }
   }, []);
 
-  React.useEffect(() => {
+  const getInitialCards = () => {
+    api
+      .getInitialCards()
+      .then((cards) => {
+        localStorage.setItem("movies", JSON.stringify(cards));
+        setMoviesList(cards);
+      })
+      .catch((err) => {
+        console.log(`Внимание! ${err}`);
+      });
+  };
+
+  const getSavedMovies = () => {
     auth
       .getSavedMovies()
       .then((cards) => {
@@ -68,20 +80,31 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  };
 
   React.useEffect(() => {
-    api
-      .getInitialCards()
-      .then((cards) => {
-        setMoviesList(cards);
-      })
-      .catch((err) => {
-        console.log(`Внимание! ${err}`);
-      });
+    console.log(savedList)
+    const movies = JSON.parse(localStorage.getItem('movies'));
+    if (movies) {
+      setMoviesList(movies);
+    } else {
+      getInitialCards();
+    }
+
+    const saved = JSON.parse(localStorage.getItem('savedMovies'));
+    if (saved) {
+      setSavedList(saved);
+    } else {
+      getSavedMovies();
+    }
   }, []);
 
-    const getCurrentUser = () => {
+/*   React.useEffect(() => {
+    getInitialCards();
+    getSavedMovies();
+  }, []); */
+
+  const getCurrentUser = () => {
     auth
       .getUserInfo()
       .then((userData) => {
@@ -150,7 +173,7 @@ function App() {
       .deleteSavedMovies(id)
       .then((res) => {
         if (res) {
-          const newList = savedList.filter((item) => item.id !== res.id)
+          const newList = savedList.filter((item) => item.id !== res.id);
           setSavedList(newList);
         }
         console.log("Фильм удален");
@@ -160,18 +183,21 @@ function App() {
       });
   };
 
-  const isMovieAdded = (movie) => savedList.some((item) => item.id === movie.id);
+  const isMovieAdded = (movie) =>
+    savedList.some((item) => item.id === movie.id);
 
   const searchFilter = (data, query) => {
     if (query) {
-      const regex = new RegExp(query, 'gi');
-      const filter = data.filter((item) => regex.test(item.nameRU) || regex.test(item.nameEN));
+      const regex = new RegExp(query, "gi");
+      const filter = data.filter(
+        (item) => regex.test(item.nameRU) || regex.test(item.nameEN)
+      );
       if (filter.length === 0) {
         setIsSuccess(false);
-        setSearchError('Ничего не найдено');
+        setSearchError("Ничего не найдено");
       } else {
         setIsSuccess(true);
-        setSearchError('');
+        setSearchError("");
       }
       return filter;
     }
@@ -251,12 +277,7 @@ function App() {
               />
             }
           />
-          <Route
-            path='*'
-            element={
-              <NotFoundPage />
-            }
-          />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
     </CurrentUserContext.Provider>
