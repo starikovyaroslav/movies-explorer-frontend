@@ -21,6 +21,11 @@
   background-repeat: no-repeat;
   width: 38px;
   height: 38px;
+  transition: .3s linear;
+}
+
+.register__logo:hover {
+  opacity: .6;
 }
 
 .register__title {

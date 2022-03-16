@@ -17,7 +17,7 @@ export default function Login({onLogin}) {
   return (
     <div className="register">
       <div className="register__container">
-        <div className="register__logo"/>
+        <Link to="/" className="register__logo"></Link>
         <h2 className="register__title">Рады видеть!</h2>
         <form className="register__form" onSubmit={handleSubmit}>
           <label className="register__label">
