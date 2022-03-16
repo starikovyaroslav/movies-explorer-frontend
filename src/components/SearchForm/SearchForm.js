@@ -18,13 +18,8 @@ export const SearchForm = ({onSubmit, onClickHandler, state, shortfilm}) => {
       }, 2000);
     } else {
       onSubmit(searchInput);
-      validation.resetForm();
     }
   };
-
-  React.useEffect(() => {
-    validation.resetForm();
-  }, [validation.resetForm]);
 
   return (
     <div className="search">
