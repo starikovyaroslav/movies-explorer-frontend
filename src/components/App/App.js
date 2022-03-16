@@ -3,7 +3,7 @@ import React from "react";
 import "./App.css";
 import { Main } from "../Main/Main";
 import Movies from "../Movies/Movies";
-import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
+import { Route, Routes, useNavigate, useLocation, Navigate} from "react-router-dom";
 import SavedMovies from "../SavedMovies/SavedMovies";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
@@ -83,9 +83,12 @@ function App() {
   };
 
   React.useEffect(() => {
-    getInitialCards();
-    getSavedMovies();
-  }, []);
+    if (loggedIn) {
+      getInitialCards();
+      getSavedMovies();
+    }
+
+  }, [loggedIn]);
 
   const getCurrentUser = () => {
     auth
@@ -245,11 +248,11 @@ function App() {
           />
           <Route
             path="/signup"
-            element={<Register handleRegistration={handleRegistration} />}
+            element={ loggedIn ? <Navigate to ="/"/> : <Register handleRegistration={handleRegistration} />}
           />
           <Route
             path="/signin"
-            element={<Login onLogin={handleAuthorization} />}
+            element={loggedIn ? <Navigate to ="/"/> : <Login onLogin={handleAuthorization} />}
           />
           <Route
             path="/profile"
