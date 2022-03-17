@@ -12,6 +12,7 @@ export const SearchForm = ({onSubmit, onClickHandler, state, shortfilm}) => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
+    localStorage.getItem('filterSaved');
     if (!searchInput) {
       setError('Нужно ввести слово');
       onSubmit("");
@@ -33,7 +34,7 @@ export const SearchForm = ({onSubmit, onClickHandler, state, shortfilm}) => {
               id="searchInput"
               className="search__input"
               name="searchInput"
-              placeholder={error ? error : JSON.parse(localStorage.getItem('query'))}
+              placeholder={error ? error : keyword !== "" ? keyword : "Фильм"}
               value={validation.values.searchInput || ""}
               onChange={validation.handleChange}
               autoComplete="off"

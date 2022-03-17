@@ -13,6 +13,7 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import auth from "../../utils/MainApi";
 import NotFoundPage from "../NotFoundPage/NotFoundPage";
 import api from "../../utils/MoviesApi";
+import Popup from "../Popup/Popup";
 
 function App() {
   const location = useLocation();
@@ -23,6 +24,9 @@ function App() {
   const [savedList, setSavedList] = React.useState([]);
   const [query, setQuery] = React.useState(JSON.parse(localStorage.getItem('query')));
   const [searchError, setSearchError] = React.useState("");
+  const [error, setError] = React.useState("");
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false)
+  const [message, setMessage] = React.useState({text: '' })
   const [filterMovies, setFilterMovies] = React.useState(JSON.parse(localStorage.getItem('filter')) || []);
   const [filterSaved, setFilterSaved] = React.useState(JSON.parse(localStorage.getItem('filterSaved')) || []);
   const [isSuccess, setIsSuccess] = React.useState(JSON.parse(localStorage.getItem('isSuccess')) || false);
@@ -40,6 +44,10 @@ function App() {
     navigate("/");
   }
 
+  function closePopup() {
+    setIsInfoTooltipOpen(false);
+  }
+
   React.useEffect(() => {
     const path = location.pathname;
     if (localStorage.loggedIn) {
@@ -52,7 +60,7 @@ function App() {
           navigate(path);
         })
         .catch((err) => {
-          console.error(err);
+          console.log(`${err.message} (${err.status})`);
           navigate("/");
         });
     }
@@ -66,7 +74,7 @@ function App() {
         setMoviesList(cards);
       })
       .catch((err) => {
-        console.log(`Внимание! ${err}`);
+        console.log(`${err.message} (${err.status})`);
       });
   };
 
@@ -78,7 +86,7 @@ function App() {
         setSavedList(cards);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(`${err.message} (${err.status})`);
       });
   };
 
@@ -94,7 +102,7 @@ function App() {
         }
       })
       .catch((err) => {
-        console.error(err);
+        console.log(`${err.message} (${err.status})`);
       });
   };
 
@@ -108,7 +116,7 @@ function App() {
         navigate("/movies");
       })
       .catch((err) => {
-        console.error(err);
+        console.log(`${err.message} (${err.status})`);
       });
   };
 
@@ -116,24 +124,30 @@ function App() {
     auth
       .register(name, email, password)
       .then((data) => {
+        setMessage({text: 'Вы успешно зарегистрировались!' });
         setTimeout(() => {
           handleAuthorization(email, password);
         }, 2000);
       })
       .catch((err) => {
-        console.error(err);
-      });
+        setMessage({text: 'При регистрации пользователя произошла ошибка.' });
+        console.log(`${err.message} (${err.status})`);
+      })
+      .finally(() => setIsInfoTooltipOpen(true))
   };
 
   const handleUpdateUser = (name, email) => {
     auth
       .setUserInfo(name, email)
       .then((data) => {
+        setMessage({text: 'Данные изменены' });
         setCurrentUser(data);
       })
       .catch((err) => {
-        console.log(err);
-      });
+        setMessage({text: 'При обновлении профиля произошла ошибка' });
+        console.log(`${err.message} (${err.status})`);
+      })
+      .finally(() => setIsInfoTooltipOpen(true));
   };
 
   const addMovie = (movie) => {
@@ -143,7 +157,7 @@ function App() {
         setSavedList([...savedList, { ...res, id: res.id }]);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(`${err.message} (${err.status})`);
       });
   };
 
@@ -159,7 +173,7 @@ function App() {
         console.log("Фильм удален");
       })
       .catch((err) => {
-        console.log(err);
+        console.log(`${err.message} (${err.status})`);
       });
   };
 
@@ -209,10 +223,12 @@ function App() {
   }, [loggedIn]);
 
   React.useEffect(() => {
+    setError('');
     if (filterMovies.length === 0) {
-      setFilterMovies(moviesList)
-    } else if (filterSaved.length === 0) {
-      setFilterSaved(savedList)
+      setFilterMovies(moviesList);
+    } else if (filterSaved.length === 0 || savedList.length === 0 ) {
+      setFilterSaved(savedList);
+      setError("У вас нет сохраненных фильмов");
     }
   },)
 
@@ -251,6 +267,7 @@ function App() {
                 isMovieAdded={isMovieAdded}
                 onSubmit={searchSavedhHandler}
                 searchError={searchError}
+                error={error}
               />
             }
           />
@@ -277,6 +294,12 @@ function App() {
           />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
+
+        <Popup
+          isOpen={isInfoTooltipOpen}
+          onClose={closePopup}
+          title={message.text}
+        />
       </div>
     </CurrentUserContext.Provider>
   );
