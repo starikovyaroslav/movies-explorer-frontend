@@ -17,8 +17,15 @@ const SavedMovies = ({ loggedIn, savedList, searchError, deleteMovies, isMovieAd
   }
 
   const onClickHandler = () => {
+    localStorage.setItem('shortfilm', !shortfilm);
     setShortfilm(!shortfilm);
+
   };
+
+  React.useEffect(() => {
+
+    setShortfilm(JSON.parse(localStorage.getItem('shortfilm')))
+  }, [])
 
   return (
     <div className="movies">

@@ -21,11 +21,11 @@ function App() {
   const [currentUser, setCurrentUser] = React.useState({});
   const [moviesList, setMoviesList] = React.useState([]);
   const [savedList, setSavedList] = React.useState([]);
-  const [query, setQuery] = React.useState("");
+  const [query, setQuery] = React.useState(JSON.parse(localStorage.getItem('query')));
   const [searchError, setSearchError] = React.useState("");
-  const [filterMovies, setFilterMovies] = React.useState([]);
-  const [filterSaved, setFilterSaved] = React.useState([]);
-  const [isSuccess, setIsSuccess] = React.useState(false);
+  const [filterMovies, setFilterMovies] = React.useState(JSON.parse(localStorage.getItem('filter')) || []);
+  const [filterSaved, setFilterSaved] = React.useState(JSON.parse(localStorage.getItem('filterSaved')) || []);
+  const [isSuccess, setIsSuccess] = React.useState(JSON.parse(localStorage.getItem('isSuccess')) || false);
 
   function handleLogout() {
     localStorage.clear();
@@ -82,13 +82,7 @@ function App() {
       });
   };
 
-  React.useEffect(() => {
-    if (loggedIn) {
-      getInitialCards();
-      getSavedMovies();
-    }
 
-  }, [loggedIn]);
 
   const getCurrentUser = () => {
     auth
@@ -185,28 +179,42 @@ function App() {
         setIsSuccess(true);
         setSearchError("");
       }
+      localStorage.setItem("isSuccess", JSON.stringify(isSuccess))
       return filter;
     }
     return [];
   };
 
   const searchHandler = (search) => {
-    setTimeout(() => {
-      localStorage.setItem("query", JSON.stringify(search));
-      setQuery(search);
-      setFilterMovies(searchFilter(moviesList, search));
-      localStorage.setItem("filter", JSON.stringify(filterMovies));
-    }, 1000);
+    localStorage.setItem("query", JSON.stringify(search));
+    setQuery(search);
+    setFilterMovies(searchFilter(moviesList, search));
+    localStorage.setItem("filter", JSON.stringify(filterMovies));
   };
 
   const searchSavedhHandler = (search) => {
-    setTimeout(() => {
-      localStorage.setItem("query", JSON.stringify(search));
-      setQuery(search);
-      setFilterSaved(searchFilter(savedList, search));
-      localStorage.setItem("filter", JSON.stringify(filterSaved));
-    }, 1000);
+    localStorage.setItem("query", JSON.stringify(search));
+    setQuery(search);
+    setFilterSaved(searchFilter(savedList, search));
+    localStorage.setItem("filterSaved", JSON.stringify(filterSaved));
   };
+
+  React.useEffect(() => {
+
+    if (loggedIn) {
+      getInitialCards();
+      getSavedMovies();
+    }
+
+  }, [loggedIn]);
+
+  React.useEffect(() => {
+    if (filterMovies.length === 0) {
+      setFilterMovies(moviesList)
+    } else if (filterSaved.length === 0) {
+      setFilterSaved(savedList)
+    }
+  },)
 
   return (
     <CurrentUserContext.Provider value={currentUser}>

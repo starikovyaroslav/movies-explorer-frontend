@@ -8,11 +8,13 @@ export const SearchForm = ({onSubmit, onClickHandler, state, shortfilm}) => {
   const validation = FormValidation();
   const [error, setError] = React.useState('');
   const { searchInput } = validation.values;
+  const keyword = JSON.parse(localStorage.getItem('query'))
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
     if (!searchInput) {
       setError('Нужно ввести слово');
+      onSubmit("");
       setTimeout(() => {
         setError('');
       }, 2000);
@@ -31,7 +33,7 @@ export const SearchForm = ({onSubmit, onClickHandler, state, shortfilm}) => {
               id="searchInput"
               className="search__input"
               name="searchInput"
-              placeholder={error ? error : "Фильм"}
+              placeholder={error ? error : JSON.parse(localStorage.getItem('query'))}
               value={validation.values.searchInput || ""}
               onChange={validation.handleChange}
               autoComplete="off"
