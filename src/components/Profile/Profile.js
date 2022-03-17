@@ -55,6 +55,7 @@ export default function Profile({ loggedIn, isLogout, currentUser, onUpdateUser 
                 placeholder={currentUser.email}
                 value={"" || validation.values.email}
                 onChange={validation.handleChange}
+                pattern="^[a-z0-9+_.-]+@[a-z0-9.-]+\.[a-z]+$"
               />
               <span className="register__input-error">{validation.errors.email}</span>
             </label>

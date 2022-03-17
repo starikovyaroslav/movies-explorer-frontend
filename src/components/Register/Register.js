@@ -48,6 +48,7 @@ export default function Register({handleRegistration}) {
               maxLength="20"
               required
               autoComplete="off"
+              pattern="^[a-z0-9+_.-]+@[a-z0-9.-]+\.[a-z]+$"
             />
             <span className="register__input-error">{validation.errors.email}</span>
           </label>

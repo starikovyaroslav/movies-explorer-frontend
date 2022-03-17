@@ -32,6 +32,7 @@ export default function Login({onLogin}) {
               minLength="6"
               maxLength="20"
               required
+              pattern="^[a-z0-9+_.-]+@[a-z0-9.-]+\.[a-z]+$"
             />
             <span className="register__input-error">{validation.errors.email}</span>
           </label>
