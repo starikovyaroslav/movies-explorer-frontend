@@ -123,8 +123,10 @@ function App() {
         navigate("/movies");
       })
       .catch((err) => {
+        setMessage({text: 'Произошла ошибка при авторизации.'});
         console.log(`${err.message} (${err.status})`);
-      });
+        setIsInfoTooltipOpen(true);
+      })
   };
 
   const handleRegistration = (name, email, password) => {
@@ -140,7 +142,7 @@ function App() {
         setMessage({text: 'При регистрации пользователя произошла ошибка.' });
         console.log(`${err.message} (${err.status})`);
       })
-      .finally(() => setIsInfoTooltipOpen(true))
+      .finally(() => setIsInfoTooltipOpen(true));
   };
 
   const handleUpdateUser = (name, email) => {
@@ -164,8 +166,10 @@ function App() {
         setSavedList([...savedList, { ...res, id: res.id }]);
       })
       .catch((err) => {
+        setMessage({text: 'Невозможно добавить карточку' });
+        setIsInfoTooltipOpen(true);
         console.log(`${err.message} (${err.status})`);
-      });
+      })
   };
 
   const deleteMovies = (movie) => {
@@ -177,11 +181,14 @@ function App() {
           const newList = savedList.filter((item) => item.id !== res.id);
           setSavedList(newList);
         }
+        setMessage({text: 'Фильм удален' });
         console.log("Фильм удален");
       })
       .catch((err) => {
+        setMessage({text: 'Невозможно удалить фильм' });
         console.log(`${err.message} (${err.status})`);
-      });
+      })
+      .finally(() => setIsInfoTooltipOpen(true));
   };
 
   const isMovieAdded = (movie) =>

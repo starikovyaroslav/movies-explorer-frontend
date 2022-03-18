@@ -8,12 +8,18 @@ import FormValidation from "../../utils/FormValidation";
 export default function Profile({ loggedIn, isLogout, currentUser, onUpdateUser }) {
   const validation = FormValidation();
   const { name = currentUser.name, email = currentUser.email} = validation.values;
+  if (email === currentUser.email) {
+    validation.errors.email = "Пользователь с таким email уже существует";
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (email === currentUser.email) {
       validation.errors.email = "Пользователь с таким email уже существует";
+    } else {
+      onUpdateUser(name, email);
+    }
 
-    } else onUpdateUser(name, email);
   };
 
   return (
