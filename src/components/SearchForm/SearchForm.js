@@ -2,13 +2,16 @@ import React from "react";
 import './SearchForm.css';
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import FormValidation from "../../utils/FormValidation";
+import { useLocation } from 'react-router-dom';
 
 export const SearchForm = ({onSubmit, onClickHandler, state, shortfilm}) => {
 
+  const location = useLocation();
+  const keyword = location.pathname === "/saved-movies" ? "" : JSON.parse(localStorage.getItem('query'));
   const validation = FormValidation();
   const [error, setError] = React.useState('');
-  const { searchInput } = validation.values;
-  const keyword = JSON.parse(localStorage.getItem('query'))
+  const { searchInput = keyword } = validation.values;
+
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -34,8 +37,8 @@ export const SearchForm = ({onSubmit, onClickHandler, state, shortfilm}) => {
               id="searchInput"
               className="search__input"
               name="searchInput"
-              placeholder={error ? error : keyword !== "" ? keyword : "Фильм"}
-              value={validation.values.searchInput || ""}
+              placeholder={error ? error : "Фильм"}
+              value={searchInput || ""}
               onChange={validation.handleChange}
               autoComplete="off"
               required

@@ -23,13 +23,20 @@ function App() {
   const [moviesList, setMoviesList] = React.useState([]);
   const [savedList, setSavedList] = React.useState([]);
   const [query, setQuery] = React.useState(JSON.parse(localStorage.getItem('query')));
+  const [querySaved, setQuerySaved] = React.useState(JSON.parse(localStorage.getItem('querySaved')));
   const [searchError, setSearchError] = React.useState("");
+  const [searchSaveError, setSearchSaveError] = React.useState("");
   const [error, setError] = React.useState("");
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false)
   const [message, setMessage] = React.useState({text: '' })
   const [filterMovies, setFilterMovies] = React.useState(JSON.parse(localStorage.getItem('filter')) || []);
   const [filterSaved, setFilterSaved] = React.useState(JSON.parse(localStorage.getItem('filterSaved')) || []);
   const [isSuccess, setIsSuccess] = React.useState(JSON.parse(localStorage.getItem('isSuccess')) || false);
+  const [isSuccessSaved, setIsSuccessSaved] = React.useState(false);
+  localStorage.setItem("filter", JSON.stringify(filterMovies));
+  localStorage.setItem("filterSaved", JSON.stringify(filterSaved));
+  localStorage.setItem("isSuccess", JSON.stringify(isSuccess));
+  localStorage.setItem("isSuccessSaved", JSON.stringify(isSuccessSaved))
 
   function handleLogout() {
     localStorage.clear();
@@ -40,6 +47,8 @@ function App() {
     setFilterMovies([]);
     setSavedList([]);
     setMoviesList([]);
+    setIsSuccess(false);
+    setIsSuccessSaved(false);
     auth.logout();
     navigate("/");
   }
@@ -89,8 +98,6 @@ function App() {
         console.log(`${err.message} (${err.status})`);
       });
   };
-
-
 
   const getCurrentUser = () => {
     auth
@@ -187,13 +194,13 @@ function App() {
         (item) => regex.test(item.nameRU) || regex.test(item.nameEN)
       );
       if (filter.length === 0) {
-        setIsSuccess(false);
-        setSearchError("Ничего не найдено");
+        location.pathname === '/saved-movies' ? setIsSuccessSaved(false) : setIsSuccess(false);
+        location.pathname === '/saved-movies' ? setSearchSaveError("Ничего не найдено") : setSearchError("Ничего не найдено");
       } else {
-        setIsSuccess(true);
+        location.pathname === '/saved-movies' ? setIsSuccessSaved(true) : setIsSuccess(true);
         setSearchError("");
+        setSearchSaveError("");
       }
-      localStorage.setItem("isSuccess", JSON.stringify(isSuccess))
       return filter;
     }
     return [];
@@ -203,14 +210,12 @@ function App() {
     localStorage.setItem("query", JSON.stringify(search));
     setQuery(search);
     setFilterMovies(searchFilter(moviesList, search));
-    localStorage.setItem("filter", JSON.stringify(filterMovies));
   };
 
   const searchSavedhHandler = (search) => {
-    localStorage.setItem("query", JSON.stringify(search));
-    setQuery(search);
+    localStorage.setItem("querySaved", JSON.stringify(search));
+    setQuerySaved(search);
     setFilterSaved(searchFilter(savedList, search));
-    localStorage.setItem("filterSaved", JSON.stringify(filterSaved));
   };
 
   React.useEffect(() => {
@@ -224,13 +229,21 @@ function App() {
 
   React.useEffect(() => {
     setError('');
-    if (filterMovies.length === 0) {
-      setFilterMovies(moviesList);
-    } else if (filterSaved.length === 0 || savedList.length === 0 ) {
-      setFilterSaved(savedList);
-      setError("У вас нет сохраненных фильмов");
+    if (query === '') {
+      setIsSuccess(false);
+      setSearchError("")
+    } else if (querySaved === '') {
+      setIsSuccessSaved(false);
+      setError("");
+      setSearchSaveError("");
     }
   },)
+
+  React.useEffect(() => {
+    if (savedList.length === 0) {
+      setError("У вас нет сохраненных фильмов");
+    } else setError("");
+  })
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -261,12 +274,12 @@ function App() {
                 path="/saved-movies"
                 loggedIn={loggedIn}
                 component={SavedMovies}
-                isSuccess={isSuccess}
-                savedList={isSuccess ? filterSaved : savedList}
+                isSuccess={isSuccessSaved}
+                savedList={isSuccessSaved ? filterSaved : savedList}
                 deleteMovies={deleteMovies}
                 isMovieAdded={isMovieAdded}
                 onSubmit={searchSavedhHandler}
-                searchError={searchError}
+                searchError={searchSaveError}
                 error={error}
               />
             }

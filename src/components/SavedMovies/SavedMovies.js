@@ -17,6 +17,8 @@ const SavedMovies = ({ loggedIn, savedList, searchError, deleteMovies, isMovieAd
     return filter;
   }
 
+  const errorText = searchError === "" ? error : searchError;
+
   const onClickHandler = () => {
     setShortfilm(!shortfilm);
   };
@@ -26,7 +28,7 @@ const SavedMovies = ({ loggedIn, savedList, searchError, deleteMovies, isMovieAd
       <Header loggedIn={loggedIn} />
       <SearchForm onSubmit={onSubmit} onClickHandler={onClickHandler} state={state} shortfilm={shortfilm}/>
 
-      { error === "" ?
+      { errorText === "" ?
        (
         <MoviesCardList
           moviesList={shortfilm ? shortFilmFilter(savedList) : savedList}
@@ -35,7 +37,7 @@ const SavedMovies = ({ loggedIn, savedList, searchError, deleteMovies, isMovieAd
         />
         ) :
         (
-          <div className="movies__error">{error}</div>
+          <div className="movies__error">{errorText}</div>
         )
       }
 
