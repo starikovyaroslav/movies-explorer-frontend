@@ -166,7 +166,7 @@ function App() {
         setSavedList([...savedList, { ...res, id: res.id }]);
       })
       .catch((err) => {
-        setMessage({text: 'Невозможно добавить карточку' });
+        setMessage({text: 'Невозможно добавить фильм' });
         setIsInfoTooltipOpen(true);
         console.log(`${err.message} (${err.status})`);
       })

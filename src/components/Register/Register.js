@@ -10,7 +10,6 @@ export default function Register({handleRegistration}) {
   function handleSubmit(e) {
     e.preventDefault();
     handleRegistration(name, email, password);
-    validation.resetForm();
   }
 
   return (
