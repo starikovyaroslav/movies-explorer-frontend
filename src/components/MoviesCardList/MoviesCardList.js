@@ -1,8 +1,10 @@
 import React from "react";
 
+import { WINDOW_WIDTH } from "../../utils/Consts";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import Preloader from "../Preloader/Preloader";
 import "./MoviesCardList.css";
+
 
 const MoviesCardList = ({loggedIn, moviesList, addMovie, deleteMovies, isMovieAdded}) => {
 
@@ -15,13 +17,13 @@ const MoviesCardList = ({loggedIn, moviesList, addMovie, deleteMovies, isMovieAd
   }
 
   function getCards() {
-    if (size >= 1280) {
+    if (size >= WINDOW_WIDTH.L) {
       setMoviesTotal(12);
       setAddMovies(3);
-    } else if (size < 1280 && size >= 768) {
+    } else if (size < WINDOW_WIDTH.L && size >= WINDOW_WIDTH.M) {
       setMoviesTotal(8);
       setAddMovies(2);
-    } else if (size < 768) {
+    } else if (size < WINDOW_WIDTH.M) {
       setMoviesTotal(5);
       setAddMovies(2);
     }

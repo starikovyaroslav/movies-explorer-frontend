@@ -5,6 +5,7 @@ import { SearchForm } from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import { Header } from "../Header/Header";
 import Footer from "../Footer/Footer";
+import { SHORT_MOVIE } from "../../utils/Consts";
 
 const Movies = ({ loggedIn, moviesList, searchError, addMovie, deleteMovies, isMovieAdded, onSubmit }) => {
 
@@ -12,7 +13,7 @@ const Movies = ({ loggedIn, moviesList, searchError, addMovie, deleteMovies, isM
   const state = shortfilm ? "checkbox__state_enable" : "checkbox__state_disable";
   localStorage.setItem("shortfilm", JSON.stringify(shortfilm));
   const shortFilmFilter = (movies) => {
-    const filter = movies.filter((item) => item.duration < 40);
+    const filter = movies.filter((item) => item.duration < SHORT_MOVIE);
     return filter;
   }
 
