@@ -8,8 +8,7 @@ import FormValidation from "../../utils/FormValidation";
 export default function Profile({ loggedIn, isLogout, currentUser, onUpdateUser }) {
 
   const validation = FormValidation();
-  const { name, email } = validation.values;
-
+  const { name = currentUser.name, email = currentUser.email} = validation.values;
   const handleSubmit = (e) => {
     e.preventDefault();
     if (email === currentUser.email) {
@@ -30,9 +29,8 @@ export default function Profile({ loggedIn, isLogout, currentUser, onUpdateUser 
                 className="profile__input"
                 type="text"
                 name="name"
-                value={"" || validation.values.name}
+                value={"" || name}
                 onChange={validation.handleChange}
-                placeholder={currentUser.name}
                 id="name"
                 minLength="2"
                 maxLength="30"
@@ -52,8 +50,7 @@ export default function Profile({ loggedIn, isLogout, currentUser, onUpdateUser 
                 minLength="6"
                 maxLength="20"
                 required
-                placeholder={currentUser.email}
-                value={"" || validation.values.email}
+                value={"" || email}
                 onChange={validation.handleChange}
                 pattern="^[a-z0-9+_.-]+@[a-z0-9.-]+\.[a-z]+$"
               />
