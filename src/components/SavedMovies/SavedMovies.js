@@ -9,24 +9,17 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 
 const SavedMovies = ({ loggedIn, savedList, searchError, deleteMovies, isMovieAdded, onSubmit, error }) => {
 
-  const [shortfilm, setShortfilm] = React.useState(false);
+  const [shortfilm, setShortfilm] = React.useState(JSON.parse(localStorage.getItem('shortfilmSaved')));
   const state = shortfilm ? "checkbox__state_enable" : "checkbox__state_disable";
+  localStorage.setItem("shortfilmSaved", JSON.stringify(shortfilm));
   const shortFilmFilter = (movies) => {
     const filter = movies.filter((item) => item.duration < 40);
     return filter;
   }
 
   const onClickHandler = () => {
-    localStorage.setItem('shortfilm', !shortfilm);
     setShortfilm(!shortfilm);
-
   };
-
-
-
-  React.useEffect(() => {
-    setShortfilm(JSON.parse(localStorage.getItem('shortfilm')))
-  }, [])
 
   return (
     <div className="movies">

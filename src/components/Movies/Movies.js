@@ -10,7 +10,7 @@ const Movies = ({ loggedIn, moviesList, searchError, addMovie, deleteMovies, isM
 
   const [shortfilm, setShortfilm] = React.useState(JSON.parse(localStorage.getItem('shortfilm')));
   const state = shortfilm ? "checkbox__state_enable" : "checkbox__state_disable";
-  localStorage.setItem("shortfilm", JSON.stringify(shortfilm))
+  localStorage.setItem("shortfilm", JSON.stringify(shortfilm));
   const shortFilmFilter = (movies) => {
     const filter = movies.filter((item) => item.duration < 40);
     return filter;
