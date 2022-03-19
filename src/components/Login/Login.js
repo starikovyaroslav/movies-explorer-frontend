@@ -1,28 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../Register/Register.css";
+import FormValidation from "../../utils/FormValidation";
 
 export default function Login({onLogin}) {
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
 
-  const handleChangeEmail = (evt) => {
-    setEmail(evt.target.value);
-  };
+  const validation = FormValidation();
+  const { email, password } = validation.values;
 
-  const handleChangePassword = (evt) => {
-    setPassword(evt.target.value);
-  };
-
-  function handleSubmit(evt) {
-    evt.preventDefault();
-    onLogin();
+  function handleSubmit(e) {
+    e.preventDefault();
+    onLogin(email, password);
   }
 
   return (
     <div className="register">
       <div className="register__container">
-        <div className="register__logo"/>
+        <Link to="/" className="register__logo"></Link>
         <h2 className="register__title">Рады видеть!</h2>
         <form className="register__form" onSubmit={handleSubmit}>
           <label className="register__label">
@@ -31,14 +25,15 @@ export default function Login({onLogin}) {
               className="register__input"
               type="email"
               name="email"
-              value={"" || email}
-              onChange={handleChangeEmail}
+              value={validation.values.email || ""}
+              onChange={validation.handleChange}
               id="email"
               minLength="6"
               maxLength="20"
               required
+              pattern="^[a-z0-9+_.-]+@[a-z0-9.-]+\.[a-z]+$"
             />
-            <span className="register__input-error"></span>
+            <span className="register__input-error">{validation.errors.email}</span>
           </label>
           <label className="register__label">
             Пароль
@@ -46,16 +41,16 @@ export default function Login({onLogin}) {
               className="register__input"
               type="password"
               name="password"
-              value={password}
-              onChange={handleChangePassword}
+              value={validation.values.password || ''}
+              onChange={validation.handleChange}
               id="password"
               minLength="6"
               maxLength="20"
               required
             />
-            <span className="register__input-error"></span>
+            <span className="register__input-error">{validation.errors.password}</span>
           </label>
-          <button className="register__button" type="submit">
+          <button className={`register__button ${validation.isValid ? "" : "register__button_disable"}`} type="submit">
             Войти
           </button>
         </form>

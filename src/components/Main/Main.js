@@ -8,11 +8,11 @@ import Portfolio from '../Portfolio/Portfolio';
 import Footer from '../Footer/Footer';
 import { Header } from '../Header/Header';
 
-export const Main = ({isLoggedIn}) => {
+export const Main = ({loggedIn}) => {
   return (
     <main>
       <Header
-        isLoggedIn={isLoggedIn}
+        loggedIn={loggedIn}
       />
       <Promo />
       <AboutProject />
