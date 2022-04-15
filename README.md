@@ -24,7 +24,7 @@ npm install
 ```
 3. Запустить проект
 ```sh
-npm install
+npm start
 ```
 5. Проект запускается на http://localhost:3000/
 
