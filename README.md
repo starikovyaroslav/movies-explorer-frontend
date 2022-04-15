@@ -30,7 +30,11 @@ npm install
 
 ## Публичный IPv4 сервера
 
-62.84.116.160
+51.250.69.126
+
+## API проекта
+
+https://api.movies-explorer.strkv.nomoredomains.work/
 
 ## Ссылка на фронт
 
