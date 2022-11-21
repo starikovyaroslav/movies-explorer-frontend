@@ -35,8 +35,8 @@ npm start
 
 ### API проекта
 
-https://api.movies-explorer.strkv.nomoredomains.work/
+https://movies-explorers-backend.herokuapp.com/
 
 ### Ссылка на фронт
 
-https://movies-explorer.starikov.nomoredomains.work/
+https://movies-explorers-frontend.herokuapp.com/
