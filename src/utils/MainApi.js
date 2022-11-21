@@ -107,7 +107,7 @@ class MainApi {
 }
 
 const auth = new MainApi({
-  url: "https://api.movies-explorer.strkv.nomoredomains.work",
+  url: "https://movies-explorers-backend.herokuapp.com",
   headers: {
     "Content-Type": "application/json",
   },
