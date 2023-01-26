@@ -39,4 +39,4 @@ https://movies-explorers-backend.herokuapp.com/
 
 ### Ссылка на фронт
 
-https://movies-explorers-frontend.herokuapp.com/
+https://movies-five-bice.vercel.app/
